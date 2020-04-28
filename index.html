@@ -1,18 +1,42 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html>
     <head>
         <meta charset="utf-8">
         <title>Project: Word game </title>
         <style>
-            body {
-                font-family: Arial, sans-serif;
-            }
-            form {
-                font-size: 1.5em;
-            }
+            body { font-family: Arial, sans-serif;}
+            form { font-size: 1.5em;}
+            
             .scrambled, input, button {
                 font-family: monospace;
                 font-size: 2em;
+            }
+            
+            .correct, {
+                display: none;
+                position: absolute;
+                top: 100px;
+                left: 100px;
+                background-color: green;
+                font-weight: bold;
+                border: solid 5px blue;
+                border-radius: 25px;
+                height: 50px;
+                width: 150px;
+                text-align: center;
+            }
+           .incorrect {
+                display: none;
+                position: absolute;
+                top: 100px;
+                left: 100px;
+                background-color: red;
+                font-weight: bold;
+                border: solid 5px blue;
+                border-radius: 25px;
+                height: 50px;
+                width: 150px;
+                text-align: center;
             }
             
         </style>
@@ -20,31 +44,55 @@
     <body>
     
     <h1>Word game!</h1>
+    
+    <div class="correct"><p>Correct, good job<p></div>
+    <div class="incorrect"><p>Incorrect, try again<p></div>
+    
     <form id="joke-form">
         <label>
-            Unscramble these letters to form a word:<Br>
-            <span class="scrambled">REYJUQ</span>
-            <br>
-            <input type="text" size="10" name="rez">
+            Unscramble these letters to form a word:<br>
+            <span class="scrambled"></span><br>
+            <input type="text" size="10">
         </label>
         <button type="submit">Check</button>
-        
     </form>
-        <div id = "rezultat"></div>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
     <script>
-        $("#joke-form").on("submit", function(event) {
-            event.preventDefualt();
-            var $rez = $(this).find("[name = rez]");
-            var rez = $rez.val();
-            if ($rez === "JQUERY") {
-                console.log("uspio siiiii! ");
-                $("#rezultat").text("uspio siiiii! ")
+        // when the user submits the form,
+        //   check that their answer is correct
+        //   and show them appropriate message
+        
+        // Options & answers
+        var scrambled = ["doce","skola","avion","rocona","auto"];
+        var answers = ["code","kosal","vinoa","corona","uoat"];
+        
+        // Create a random number to be used for scrambled words
+        var random = Math.floor((Math.random() * 5));
+        
+        //Initial word, shown when loading the page
+        $(".scrambled").text(scrambled[random]);
+        
+        //Eventlistner
+        $("#joke-form").on("submit", function(event){
+            event.preventDefault();
+            var $answer = $(this).find('[type=text]');  //
+            var answer = $answer.val();             //get the submited value
+            if (answer === answers[random]) {
+                //show block correct
+                $('.correct').css("display", "block").fadeOut(2500);
+                //reset to empty value
+                $answer.val("");
+                //create new random number between 0 - 4
+                random = Math.floor((Math.random() * 5));
+                //Give new scrambled option
+                $(".scrambled").text(scrambled[random]);
             } else {
-                $("#rezultat").text("probaj ponovo.")
+                //Display incorrect box
+                $(".incorrect").css("display", "block").fadeOut(2500);;
             }
-        })
+        });
+        
     </script>
     </body>
 </html>
