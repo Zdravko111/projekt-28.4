@@ -28,20 +28,21 @@
             <input type="text" size="10" name="rez">
         </label>
         <button type="submit">Check</button>
-        <div id="rezultat"></div>
+        
     </form>
+        <div id = "rezultat"></div>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
     <script>
         $("#joke-form").on("submit", function(event) {
             event.preventDefualt();
-            var $rez = $(this).find("[name = word]");
+            var $rez = $(this).find("[name = rez]");
             var rez = $rez.val();
             if ($rez === "JQUERY") {
-                console.log("uspio siiiii! :)");
-                $("#rezultat").text("uspio siiiii! :)")
+                console.log("uspio siiiii! ");
+                $("#rezultat").text("uspio siiiii! ")
             } else {
-                $("#rezultat").text("probaj ponovo :(.")
+                $("#rezultat").text("probaj ponovo.")
             }
         })
     </script>
